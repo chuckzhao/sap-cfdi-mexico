@@ -42,3 +42,4 @@ logs/
 
 # Test data with sensitive info
 test-data/production/
+sap_cfdi_english.sh
