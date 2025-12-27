@@ -1,0 +1,42 @@
+{
+  "environment": "test",
+  "pac_provider": "montova",
+  "montova": {
+    "test": {
+      "rest_url": "https://timbrado-pruebas.montova.com.mx/api/v1",
+      "soap_url": "https://timbrado-pruebas.montova.com.mx/services/Timbrado",
+      "username": "YOUR_TEST_USERNAME",
+      "password": "STORED_IN_SAP_SSF",
+      "rfc": "YOUR_RFC"
+    },
+    "production": {
+      "rest_url": "https://timbrado.montova.com.mx/api/v1",
+      "soap_url": "https://timbrado.montova.com.mx/services/Timbrado",
+      "username": "YOUR_PROD_USERNAME",
+      "password": "STORED_IN_SAP_SSF",
+      "rfc": "YOUR_RFC"
+    }
+  },
+  "edicom": {
+    "test": {
+      "rest_url": "https://webservices-test.edicomgroup.com/cfdi/v1",
+      "soap_url": "https://webservices-test.edicomgroup.com/cfdi/TimbradoService",
+      "api_key": "STORED_IN_SAP_SSF",
+      "client_id": "YOUR_CLIENT_ID"
+    },
+    "production": {
+      "rest_url": "https://webservices.edicomgroup.com/cfdi/v1",
+      "soap_url": "https://webservices.edicomgroup.com/cfdi/TimbradoService",
+      "api_key": "STORED_IN_SAP_SSF",
+      "client_id": "YOUR_CLIENT_ID"
+    }
+  },
+  "certificate": {
+    "storage": "SSF",
+    "alias": "CFDI_CERT_2024"
+  },
+  "retry_policy": {
+    "max_attempts": 3,
+    "delay_seconds": 5
+  }
+}

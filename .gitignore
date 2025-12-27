@@ -1,47 +1,44 @@
-﻿# SAP-specific
-*.abap~
-*.sap~
-.tmp/
-
-# Certificados y credenciales - NUNCA SUBIR
+# Digital Certificates - NEVER COMMIT THESE!
 *.cer
 *.key
 *.p12
 *.pfx
 *.pem
-**/certificates/*.cer
-**/certificates/*.key
-**/pac-configs/*password*
-**/pac-configs/*credentials*
 
-# Configuración local
-config/pac-configs/montova-config.json
-config/pac-configs/edicom-config.json
-config/certificates/
+# Credentials
+config/credentials.json
+config/production.json
+config/*.credentials
 
-# IDE
-.vscode/
-.idea/
-*.iml
+# API Keys
+.env
+.env.local
+.env.production
 
-# OS
+# SAP Transport files
+*.dat
+*.bin
+*R3trans*
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# OS Files
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Build
-*.zip
-/build/
-/dist/
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
 
 # Logs
 *.log
-/logs/
+logs/
 
-# Test results
-/test-results/
-/coverage/
-
-# Temporary
-*.tmp
-*.temp
-*~
+# Test data with sensitive info
+test-data/production/
