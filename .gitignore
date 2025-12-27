@@ -1,0 +1,47 @@
+﻿# SAP-specific
+*.abap~
+*.sap~
+.tmp/
+
+# Certificados y credenciales - NUNCA SUBIR
+*.cer
+*.key
+*.p12
+*.pfx
+*.pem
+**/certificates/*.cer
+**/certificates/*.key
+**/pac-configs/*password*
+**/pac-configs/*credentials*
+
+# Configuración local
+config/pac-configs/montova-config.json
+config/pac-configs/edicom-config.json
+config/certificates/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+*.zip
+/build/
+/dist/
+
+# Logs
+*.log
+/logs/
+
+# Test results
+/test-results/
+/coverage/
+
+# Temporary
+*.tmp
+*.temp
+*~
