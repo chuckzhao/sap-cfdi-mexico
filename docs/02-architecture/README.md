@@ -76,32 +76,104 @@ Send to Customer ──▶ Email XML + PDF
 ### 2. Timbrado (Stamping) Flow
 
 ```
-┌──────────┐     1. Send XML      ┌──────────┐
-│   SAP    │────────────────────▶│   PAC    │
-│          │                     │          │
-│          │     2. Validate      │          │
-│          │◀────────────────────│          │
-│          │     OK/Error         │          │
-│          │                     │          │
-│          │     3. Forward       └──────────┘
-│          │◀──────────┐                │
-│          │           │                │
-│          │           │          ┌─────▼──────┐
-│          │           │          │    SAT     │
-│          │           │          │            │
-│          │           │          │ 4. Accept  │
-│          │           │          └─────┬──────┘
-│          │           │                │
-│          │      ┌────┴───────────────┘
-│          │      │    5. Return
-│          │      │       Stamp
-│          │◀─────┴────────────┐
-│          │     6. Stamped XML │
-│          │                   ┌▼──────────┐
-│          │     7. Store      │   PAC     │
-└──────────┘◀──────────────────┤           │
-             UUID & XML        └───────────┘
+┌──────────────┐                 ┌──────────────┐                 ┌──────────────┐
+│     SAP      │                 │     PAC      │                 │     SAT      │
+│   System     │                 │   Provider   │                 │ (Tax Admin)  │
+└──────┬───────┘                 └──────┬───────┘                 └──────┬───────┘
+       │                                │                                │
+       │  1. Send unsigned CFDI XML     │                                │
+       │───────────────────────────────▶│                                │
+       │                                │                                │
+       │                                │  2. Validate XML               │
+       │                                │     - Schema check             │
+       │                                │     - Business rules           │
+       │                                │     - SAT catalogs             │
+       │                                │                                │
+       │  If validation fails:          │                                │
+       │◀───────────────────────────────│                                │
+       │  Error response (stop here)    │                                │
+       │                                │                                │
+       │                                │  3. Forward validated XML      │
+       │                                │───────────────────────────────▶│
+       │                                │                                │
+       │                                │                                │  4. SAT validates
+       │                                │                                │     and stores CFDI
+       │                                │                                │
+       │                                │  5. SAT confirms acceptance    │
+       │                                │◀───────────────────────────────│
+       │                                │                                │
+       │                                │  6. PAC generates stamp:       │
+       │                                │     - Create UUID              │
+       │                                │     - Add TimbreFiscalDigital  │
+       │                                │     - Apply PAC seal           │
+       │                                │     - Apply SAT seal           │
+       │                                │                                │
+       │  7. Return stamped CFDI        │                                │
+       │◀───────────────────────────────│                                │
+       │     - UUID (Folio Fiscal)      │                                │
+       │     - Stamped XML              │                                │
+       │     - Certification date       │                                │
+       │                                │                                │
+       │  8. Store in SAP:              │                                │
+       │     - Save UUID to billing doc │                                │
+       │     - Archive stamped XML      │                                │
+       │     - Update document status   │                                │
+       │                                │                                │
 ```
+
+#### Detailed Step-by-Step Explanation
+
+**Step 1: SAP Sends Unsigned XML**
+- SAP generates CFDI XML from billing document
+- Applies company's digital signature
+- Sends to PAC via REST or SOAP API
+
+**Step 2: PAC Validation**
+- Validates XML structure against CFDI 4.0 schema
+- Checks business rules (amounts, dates, etc.)
+- Verifies codes against SAT catalogs
+- Validates company's digital signature
+- If any validation fails, returns error to SAP immediately
+
+**Step 3: PAC Forwards to SAT**
+- Only if validation passes
+- PAC sends validated XML to SAT's reception service
+- This happens in real-time
+
+**Step 4: SAT Processing**
+- SAT performs its own validation
+- Stores CFDI in national database
+- Makes invoice available in public verification portal
+
+**Step 5: SAT Confirmation**
+- SAT returns acceptance confirmation to PAC
+- Includes authorization for PAC to proceed with stamping
+
+**Step 6: PAC Creates Stamp**
+- Generates unique UUID (Folio Fiscal)
+- Creates TimbreFiscalDigital complement containing:
+  - UUID
+  - Certification date/time
+  - PAC digital seal
+  - SAT digital seal
+  - Certificate numbers
+- Adds this complement to original XML
+
+**Step 7: Return to SAP**
+- PAC sends stamped XML back to SAP
+- Includes UUID and all seal information
+- This is now the legally valid CFDI
+
+**Step 8: SAP Storage**
+- Stores UUID in billing document table
+- Archives complete stamped XML
+- Updates document status to "Stamped"
+- Ready to send to customer
+
+#### Timing
+- **Normal process**: 2-5 seconds total
+- **Peak times**: Up to 10 seconds
+- **Timeout**: Usually set at 30 seconds
 
 ## Component Details
 
