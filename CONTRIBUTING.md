@@ -110,9 +110,10 @@ We accept contributions in several areas:
 
 1. **Fork and Clone**
    ```bash
-   git fork https://github.com/original/sap-cfdi-mexico.git
-   git clone https://github.com/yourusername/sap-cfdi-mexico.git
+   # Fork the repository on GitHub, then clone your fork:
+   git clone https://github.com/YOUR_USERNAME/sap-cfdi-mexico.git
    cd sap-cfdi-mexico
+   git remote add upstream https://github.com/chuckzhao/sap-cfdi-mexico.git
    ```
 
 2. **Create a Branch**

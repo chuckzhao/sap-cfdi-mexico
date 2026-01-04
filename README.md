@@ -45,11 +45,12 @@ This repository provides a complete implementation guide for CFDI (Comprobante F
   - Edicom PAC integration (REST/SOAP/Add-on)
   - Extensible architecture for other PACs
 
-- **Production-Ready ABAP Code**
-  - Modular class design
-  - Error handling and retry logic
+- **ABAP Implementation Code**
+  - Modular class design with full XML generation
+  - Comprehensive error handling with custom exceptions
   - Configurable for multiple environments
-  - Secure credential management
+  - Secure credential management via SSF
+  - Requires customization of SAT codes and certificates for production
 
 - **Comprehensive Documentation**
   - Step-by-step implementation guides
@@ -87,7 +88,7 @@ This repository provides a complete implementation guide for CFDI (Comprobante F
 
 ### Step 1: Clone Repository
 ```bash
-git clone https://github.com/yourusername/sap-cfdi-mexico.git
+git clone https://github.com/chuckzhao/sap-cfdi-mexico.git
 cd sap-cfdi-mexico
 ```
 
@@ -293,9 +294,13 @@ See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
 ---
 
-**Current Version**: 1.0.0
-**Last Updated**: December 2024
-**Status**: Production Ready
+**Current Version**: 1.1.0
+**Last Updated**: January 2026
+**Status**: Beta - Ready for customization and testing
+
+> **Note**: This implementation provides complete CFDI 4.0 XML generation and validation.
+> Before production use, you must configure company-specific settings (RFC, certificates, SAT catalog mappings)
+> and test thoroughly with your PAC provider's test environment.
 
 ---
 
