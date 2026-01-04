@@ -7,20 +7,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Planned
+- Additional PAC provider integrations
+- Complemento de Pago (Payment Complement) support
+- Automated SAT catalog updates
+
+## [1.1.0] - 2026-01-04
+
 ### Added
-- Comprehensive README with installation and usage guides
-- Contributing guidelines (CONTRIBUTING.md)
-- Complete MIT License
-- Deployment guide documentation
-- Troubleshooting guide
-- FAQ documentation
-- Enhanced ABAP classes with type definitions
-- Example ABAP programs
-- GitHub issue and PR templates
+
+#### Exception Classes
+- `ZCX_CFDI_GENERATION` - Comprehensive exception class for generation errors
+  - 10 specific error codes (billing_doc_not_found, invalid_rfc, missing_sat_codes, etc.)
+  - Proper T100 message integration
+  - Contextual error attributes (vbeln, kunnr, rfc, matnr)
+- `ZCX_CFDI_SIGNATURE` - Exception class for signature-related errors
+  - 10 specific error codes (certificate_not_found, certificate_expired, ssf_error, etc.)
+  - Certificate and SSF context attributes
+
+#### Complete CFDI Generator Implementation
+- Full XML generation with proper namespace handling
+- Complete tax calculation (IVA, withholding taxes)
+- Item-level and document-level Impuestos nodes
+- RFC validation with regex patterns (company and person formats)
+- Payment form code mapping (SAT catalog c_FormaPago)
+- Currency code mapping (MXP → MXN)
+- Exchange rate handling for foreign currencies
+- XML validation with comprehensive error reporting
+
+#### Unit Tests
+- `ZCL_CFDI_GENERATOR_TEST` - Comprehensive unit test class
+  - Date/time formatting tests
+  - RFC validation tests (valid/invalid formats)
+  - XML validation tests
+  - Exception handling tests
+  - Test data helper class
+
+#### Documentation
+- `docs/pac-integration-guide.md` - Complete guide for adding new PAC providers
+  - PAC interface class documentation
+  - Authentication methods (API Key, OAuth 2.0)
+  - Error handling and retry logic
+  - Mock PAC for unit testing
 
 ### Changed
-- Improved repository structure
-- Enhanced documentation organization
+- Updated README.md status from "Production Ready" to "Beta - Ready for customization"
+- Clarified that code requires company-specific configuration before production use
+- Fixed placeholder GitHub URLs in README and CONTRIBUTING.md
+- Enhanced ABAP class with 20+ new methods for complete functionality
+- Improved documentation accuracy
+
+### Fixed
+- Broken link to PAC integration guide in README.md
+- Missing exception classes referenced in main generator class
+- Incomplete TODO implementations replaced with working code
 
 ## [1.0.0] - 2024-12-27
 
